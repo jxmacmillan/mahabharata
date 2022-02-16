@@ -58,6 +58,15 @@
     
 </body>
     <script>
+        const data = Data.csv;
+        const Reader = new FileReader();
+        Reader.readAsText(data);
+        Reader.onload = function() {
+            const csv = Reader.result;
+            const table = document.createElement('table');
+            table.innerHTML = '<tr><td>' + csv.split('\n').join('</td><td>') + '</td></tr>';
+            document.body.appendChild(table);
+        }
         function myFunction() {
             window.alert("Fill in this code please!");
         }
