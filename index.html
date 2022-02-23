@@ -59,7 +59,13 @@
 </body>
     <script>
         function myFunction() {
-            window.alert("Fill in this code please!");
+            const objArray;
+            for (var i =0; i < rows.length; i++){
+                const currentRow = rows[i].split(",");
+                const myObj = {State: currentRow[0], FIPS: currentRow[1], DistrictID: currentRow[2], Name: currentRow[3], EstimatedTotalPopulation: currentRow[4], EstimatedPopulation5to17: currentRow[5], relatedChildren: currentRow[6]
+                }
+                objArray.push(myObj);
+            }
         }
     </script>
 </html>
