@@ -66,36 +66,16 @@
   <button type="button" onclick="loadDoc()">click me daddy</button>
 </div>
 
-</body>
-<script>
-function loadDoc() {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onload = function() {
-    document.getElementById("demo").innerHTML = this.responseText;
-    }
-  xhttp.open("GET", "Data.csv", true);
-  xhttp.send();
-}
-</script>
-<script>
-    function myFunction() {
-        window.alert("Fill in this code please!");
-    }
-</script>
-</html>
-
     <script>
         function loadDoc() {
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
             document.getElementById("demo").innerHTML = this.responseText;
         }
-        xhttp.open("GET", "Data.csv", true);
+        xhttp.open("GET", "Data.csv", false);
         xhttp.send();
         }
-    </script>
-<<<<<<< HEAD
-    
+    </script>    
         <script>
             function myFunction() {
                 const objArray;
@@ -110,6 +90,6 @@ function loadDoc() {
     </body>
 </html>
 
-=======
-</html>
->>>>>>> refs/remotes/origin/main
+
+
+
