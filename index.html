@@ -3,42 +3,33 @@
 <body>
 
 <div id="demo">
-  <h2>Let AJAX change this text</h2>
-  <button type="button" onclick="loadDoc()">Change Content</button>
+  <h2>Display Data lol</h2>
+  <button type="button" onclick="loadDoc()">click me daddy</button>
 </div>
 
-</body>
-<script>
-function loadDoc() {
-  const xhttp = new XMLHttpRequest();
-  xhttp.onload = function() {
-    document.getElementById("demo").innerHTML = this.responseText;
-    }
-  xhttp.open("GET", "Data.csv", true);
-  xhttp.send();
-}
-</script>
-</html>
 
     <script>
-        const data = Data.csv;
-        const Reader = new FileReader();
-        Reader.readAsText(data);
-        Reader.onload = function() {
-            const csv = Reader.result;
-            const table = document.createElement('table');
-            table.innerHTML = '<tr><td>' + csv.split('\n').join('</td><td>') + '</td></tr>';
-            document.body.appendChild(table);
+        function loadDoc() {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            document.getElementById("demo").innerHTML = this.responseText;
         }
-        function myFunction() {
-            const objArray;
-            for (var i =0; i < rows.length; i++){
-                const currentRow = rows[i].split(",");
-                const myObj = {State: currentRow[0], FIPS: currentRow[1], DistrictID: currentRow[2], Name: currentRow[3], EstimatedTotalPopulation: currentRow[4], EstimatedPopulation5to17: currentRow[5], relatedChildren: currentRow[6]
-                }
-                objArray.push(myObj);
-            }
+        xhttp.open("GET", "Data.csv", true);
+        xhttp.send();
         }
     </script>
+    
+        <script>
+            function myFunction() {
+                const objArray;
+                for (var i =0; i < rows.length; i++){
+                    const currentRow = rows[i].split(",");
+                    const myObj = {State: currentRow[0], FIPS: currentRow[1], DistrictID: currentRow[2], Name: currentRow[3], EstimatedTotalPopulation: currentRow[4], EstimatedPopulation5to17: currentRow[5], relatedChildren: currentRow[6]
+                    }
+                    objArray.push(myObj);
+                }
+            }
+        </script>        
+    </body>
 </html>
 
