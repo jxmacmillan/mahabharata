@@ -120,6 +120,10 @@
         const text = e.target.result;
         const data = csvToArray(text);
         document.write(JSON.stringify(data));
+        for (var i=0; i<arr.length(); i++){
+            document.write("<tr><td>Position: " + i + "is:</td>");
+            document.write("<td>" + arr[i] + "</td></tr>");
+        }
     };
     </script>
        
