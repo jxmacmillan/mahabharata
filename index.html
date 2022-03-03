@@ -17,7 +17,10 @@
             <option value="state">State</option>
             <option value="fips">State FIPS Code</option>
             <option value="dist-id">District ID</option>
-            <!--Add remaining options-->
+            <option value="name">Name</option>
+            <option value="total-pop">Total Population</option>
+            <option value="School-aged-pop">School-aged population</option>
+            <option value="pov-rate">Poverty Rate</option>
         </select>
         <lable for="searchfor">Search for </lable>
         <input id="searchfor" type="text" />
@@ -31,7 +34,7 @@
   <table>
       <thead>
           <tr>
-              <th><a href="javascript:myFunction()">State</a></th>
+              <th><a href="javascript:sort()">State</a></th>
               <th>State FIPS Code</th>
               <th>District ID</th>
               <th>Name</th>
@@ -95,6 +98,25 @@ function loadDoc() {
                 const myObj = {State: currentRow[0], FIPS: currentRow[1], DistrictID: currentRow[2], Name: currentRow[3], EstimatedTotalPopulation: currentRow[4], EstimatedPopulation5to17: currentRow[5], relatedChildren: currentRow[6]
                 }
                 objArray.push(myObj);
+            }
+        }
+        function sort(){
+            objArray.sort(function(a,b){
+                return a.State - b.State;
+            }   );
+        }
+        function search(){
+            let input = document.getElementById('searchbar').value;
+            input=input.toLowerCase();
+            let x = document.getElementsByClassName('objArray');
+      
+            for (i = 0; i < x.length; i++) { 
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                x[i].style.display="none";
+                }
+                else {
+                    x[i].style.display="list-item";                 
+                }
             }
         }
     </script>
