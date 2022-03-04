@@ -45,7 +45,6 @@
     function loadText(){
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data.csv', true);
-
       xhr.onload = function(){
         if(this.status == 200){
 		  const myArray = this.responseText.split(",");
