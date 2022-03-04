@@ -92,7 +92,7 @@ function loadDoc() {
             document.body.appendChild(table);
         }
         function myFunction() {
-            const objArray;
+            var objArray;
             for (var i =0; i < rows.length; i++){
                 const currentRow = rows[i].split(",");
                 const myObj = {State: currentRow[0], FIPS: currentRow[1], DistrictID: currentRow[2], Name: currentRow[3], EstimatedTotalPopulation: currentRow[4], EstimatedPopulation5to17: currentRow[5], relatedChildren: currentRow[6]
@@ -105,17 +105,22 @@ function loadDoc() {
                 return a.State - b.State;
             }   );
         }
+        function sortReverse(){
+            objArray.sort(function(a,b){
+                return b.State - a.State;
+            }   );
+            objArray.reverse();
+        }
         function search(){
             let input = document.getElementById('searchbar').value;
             input=input.toLowerCase();
             let x = document.getElementsByClassName('objArray');
-      
-            for (i = 0; i < x.length; i++) { 
+            for (i = 0; i < x.length; i++) {
                 if (!x[i].innerHTML.toLowerCase().includes(input)) {
                 x[i].style.display="none";
                 }
                 else {
-                    x[i].style.display="list-item";                 
+                    x[i].style.display="list-item";
                 }
             }
         }
