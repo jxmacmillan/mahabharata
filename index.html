@@ -1,39 +1,18 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Depressing Table</title>
-        <link rel="stylesheet" href="./style.css">
-    </head>    
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ajax 1 - Text File</title>
+</head>
 <body>
-    <div id="main-title">
-        <h1> Poverty in American School Districts</h1>
-        <p> <em> Brought to you by the US Census Bureau </em></p>
-    </div>
+  <button id="button">Get Text File</button>
+  <br><br>
+  <div id="text"></div>
 
-    <form id="search" onSubmit="myFunction()">
-        <lable for="search-column">In Column:</lable>
-        <select name="column" id="search-column">
-            <option value="state">State</option>
-            <option value="fips">State FIPS Code</option>
-            <option value="dist-id">District ID</option>
-            <option value="name">Name</option>
-            <option value="total-population">Total Population</option>
-            <option value="school-aged-population">School-Aged Population (5-17)</option>
-            <option value="poor-kids">School-Aged Children in Poverty</option>
-            <option value="poverty-rate">Poverty Rate</option>
-
-        </select>
-        <lable for="searchfor">Search for </lable>
-        <input id="searchfor" type="text" />
-        <select name="scope" id="search-scope">
-            <option value="exact">Matches Exactly</option>
-            <option value="contains">Contains</option>
-            <option value="not-conains">Does Not Contain</option>
-        </select>
-    <input type="submit" id="submit-search" />
-    </form>
-  <table>
+<table>
       <thead>
           <tr>
               <th><a href="javascript:myFunction()">State</a></th>
@@ -60,38 +39,22 @@
       </tbody>
   </table>
 
+  <script>
+    document.getElementById('button').addEventListener('click', loadText);
+    function loadText(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'FileData.txt', true);
 
-<div id="demo">
-  <h2>Display Data lol</h2>
-  <button type="button" onclick="loadDoc()">click me daddy</button>
-</div>
-    
-    <script>
-    function loadDoc(){
-            const xhttp = new XMLHttpRequest();
-            xhttp.onload = function() {
-              document.getElementById("demo").innerHTML = this.responseText;
-            }
-            xhttp.open("GET", "FileData.txt");
-            xhttp.send();
-            myFunction(data);
+      xhr.onload = function(){
+        if(this.status == 200){
+		  const myArray = this.responseText.split(",");
+		  console.log(myArray);
+        } else if(this.status = 404){
+          document.getElementById('text').innerHTML = 'Not Found';
         }
-    </script>
-
-    <script>
-        function myFunction(data){
-            
-            let rows = data.split("\n");
-                for(i = 0; i<rows.length; i++){
-                    let temp = rows[i].split(",");
-                }
-        }
-
-    </script>
-       
-    </body>
+      }
+      xhr.send();
+    }
+  </script>
+</body>
 </html>
-
-
-
-
