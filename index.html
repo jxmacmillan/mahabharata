@@ -10,31 +10,9 @@
 <body>
   <button id="button">Get Text File</button>
   <br><br>
-  <div id="text">
-      <h2>Childhood Poverty Statistics</h2>
-  </div>
-  <form id="search" onSubmit="myFunction()">
-    <label for="search-column">In Column:</label>
-    <select name="column" id="search-column">
-        <option value="state">State</option>
-        <option value="fips">State FIPS Code</option>
-        <option value="dist-id">District ID</option>
-        <option value="name">Name</option>
-        <option value="total-pop">Total Population</option>
-        <option value="School-aged-pop">School-aged population</option>
-        <option value="pov-rate">Poverty Rate</option>
-    </select>
-    <label for="searchfor">Search for </label>
-    <input id="searchfor" type="text" />
-    <select name="scope" id="search-scope">
-        <option value="exact">Matches Exactly</option>
-        <option value="contains">Contains</option>
-        <option value="not-conains">Does Not Contain</option>
-    </select>
-<input type="submit" id="submit-search" />
-</form>
+  <div id="text"></div>
 
-<table id="mainTable">
+<table>
       <thead>
           <tr>
               <th><a href="javascript:myFunction()">State</a></th>
@@ -67,6 +45,7 @@
     function loadText(){
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'FileData.txt', true);
+
       xhr.onload = function(){
         if(this.status == 200){
 		  const myArray = this.responseText.split(",");
@@ -76,51 +55,6 @@
         }
       }
       xhr.send();
-    }
-
-    function search(){
-        var input, filter, table, tr, td, i, txtValue, column;
-        var r = 0;
-        var results = [];
-        input = document.getElementById("searchfor");
-        column = document.getElementById("search-column");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("mainTable");
-        tr = table.getElementsByTagName("tr");
-        switch(column.value){
-            case "state":
-                column = 0;
-                break;
-            case "fips":
-                column = 1;
-                break;
-            case "dist-id":
-                column = 2;
-                break;
-            case "name":
-                column = 3;
-                break;
-            case "total-pop":
-                column = 4;
-                break;
-            case "School-aged-pop":
-                column = 5;
-                break;
-            case "pov-rate":
-                column = 6;
-                break;
-        }
-        for(i = 0; i < table.rows.length; i++){
-            td = tr[column].getElementsByTagName("td")[0];
-            if(td){
-            txtValue = td.textContent || td.innerText;
-            if(txtValue.toUpperCase().indexOf(filter) > -1){
-                results[r] = tr[i];
-            } else {
-                tr[i].style.display = "none";
-            }
-            }
-        }
     }
   </script>
 </body>
