@@ -36,8 +36,8 @@
         <lable for="length">Length:</lable>
         <select name="length" id="length">
             <option value="10">10</option>
-            <option value="15">15</option>
             <option value="25">25</option>
+            <option value="50">50</option>
         </select>
     </form>
   <table>
@@ -72,18 +72,16 @@
 
     function loadText(){
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', 'data.csv', true);
+      xhr.open('GET', 'data.txt', true);
       xhr.onload = function(){
         if(this.status == 200){
 		  const myArray = this.responseText.split(",");
-		  console.log(myArray);
         } else if(this.status = 404){
           document.getElementById('text').innerHTML = 'Not Found';
         }
       }
       xhr.send();
       for (var i=0; i<myArray.length; i++){
-            document.write("<tr><td>Number " + i + " is:</td>");
             document.write("<td>" + myArray[i] + "</td></tr>");
         }
     }
