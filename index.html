@@ -7,8 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Depressing Data</title>
 </head>
-<body>
-  <button id="button">Get Text File</button>
+<body onload="loadText()">
   <br><br>
   <div id="text"></div>
 
@@ -85,7 +84,7 @@
 		    var table = document.getElementById("myTable");
             var row = table.insertRow(0);
             var cell = row.insertCell(0);
-		    cell.innerHTML = myArray[i]; 
+		    cell.innerHTML = myArray[i];
     }
     function myFunction() {
             var objArray;
