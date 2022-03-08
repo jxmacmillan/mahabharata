@@ -28,11 +28,11 @@
         <select name="scope" id="search-scope">
             <option value="exact">Matches Exactly</option>
             <option value="contains">Contains</option>
-            <option value="not-conains">Does Not Contain</option>
+            <option value="not-contains">Does Not Contain</option>
         </select>
     <input type="submit" id="submit-search" />
     </form>
-    <form id="lengthSelect">
+    <form id="lengthSelect" onSubmit="resize()">
         <lable for="length">Length:</lable>
         <select name="length" id="length">
             <option value="10">10</option>
@@ -117,6 +117,9 @@
                     x[i].style.display="list-item";
                 }
             }
+        }
+        function resize(){
+            let length = getDocument.getElementById('length').value;
         }
     </script>
 </body>
