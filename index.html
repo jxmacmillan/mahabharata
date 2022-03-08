@@ -5,17 +5,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Poverty</title>
+  <title>Ajax 1 - Text File</title>
 </head>
 <body>
   <button id="button">Get Text File</button>
   <br><br>
   <div id="text"></div>
 
-<table id = "myTable">
+    <form id="search" onSubmit="myFunction()">
+        <lable for="search-column">In Column:</lable>
+        <select name="column" id="search-column">
+            <option value="state">State</option>
+            <option value="fips">State FIPS Code</option>
+            <option value="dist-id">District ID</option>
+            <option value="name">Name</option>
+            <option value="total-pop">Total Population</option>
+            <option value="School-aged-pop">School-aged population</option>
+            <option value="pov-rate">Poverty Rate</option>
+        </select>
+        <lable for="searchfor">Search for </lable>
+        <input id="searchfor" type="text" />
+        <select name="scope" id="search-scope">
+            <option value="exact">Matches Exactly</option>
+            <option value="contains">Contains</option>
+            <option value="not-contains">Does Not Contain</option>
+        </select>
+    <input type="submit" id="submit-search" />
+    </form>
+    <form id="lengthSelect" onSubmit="resize()">
+        <lable for="length">Length:</lable>
+        <select name="length" id="length">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+    </form>
+  <table>
       <thead>
           <tr>
-              <th><a href="javascript:myFunction()">State</a></th>
+              <th><a href="javascript:sort()">State</a></th>
               <th>State FIPS Code</th>
               <th>District ID</th>
               <th>Name</th>
@@ -44,23 +72,61 @@
 
     function loadText(){
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', 'FileData.txt', true);
-
+      xhr.open('GET', 'data.txt', true);
       xhr.onload = function(){
         if(this.status == 200){
 		  const myArray = this.responseText.split(",");
-		  for(let i = 0 ; i < 10; i++) {
-		    var table = document.getElementById("myTable");
-            var row = table.insertRow(0);
-            var cell = row.insertCell(0);
-		    cell.innerHTML = myArray[i]; }
-		  
         } else if(this.status = 404){
           document.getElementById('text').innerHTML = 'Not Found';
         }
       }
       xhr.send();
+      for (var i=0; i<myArray.length; i++){
+            document.write("<td>" + myArray[i] + "</td></tr>");
+        }
     }
-  </script>
+    for(let i = 0 ; i < 10; i++) {
+		    var table = document.getElementById("myTable");
+            var row = table.insertRow(0);
+            var cell = row.insertCell(0);
+		    cell.innerHTML = myArray[i]; 
+    }
+    function myFunction() {
+            var objArray;
+            for (var i =0; i < rows.length; i++){
+                const currentRow = rows[i].split(",");
+                const myObj = {State: currentRow[0], FIPS: currentRow[1], DistrictID: currentRow[2], Name: currentRow[3], EstimatedTotalPopulation: currentRow[4], EstimatedPopulation5to17: currentRow[5], relatedChildren: currentRow[6]
+                }
+                objArray.push(myObj);
+            }
+        }
+        function sort(){
+            objArray.sort(function(a,b){
+                return a.State - b.State;
+            }   );
+        }
+        function sortReverse(){
+            objArray.sort(function(a,b){
+                return b.State - a.State;
+            }   );
+            objArray.reverse();
+        }
+        function search(){
+            let input = document.getElementById('searchbar').value;
+            input=input.toLowerCase();
+            let x = document.getElementsByClassName('objArray');
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                x[i].style.display="none";
+                }
+                else {
+                    x[i].style.display="list-item";
+                }
+            }
+        }
+        function resize(){
+            let length = getDocument.getElementById('length').value;
+        }
+    </script>
 </body>
 </html>
