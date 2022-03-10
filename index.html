@@ -41,23 +41,8 @@
 
   <script>
     document.getElementById('button').addEventListener('click', loadText);
-    function loadText(){
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', 'FileData.txt', true);
-
-      xhr.onload = function(){
-        if(this.status == 200){
-		  const myArray = this.responseText.split(",");
-		  console.log(myArray);
-        } else if(this.status = 404){
-          document.getElementById('text').innerHTML = 'Not Found';
-        }
-      }
-      xhr.send();
-        for (var i=0; i<myArray.length; i++){
-            document.write("<tr><td>Number " + i + " is:</td>");
-            document.write("<td>" + myArray[i] + "</td></tr>");
-        }
+    function search(){
+        const scope=document.getElementById("search-scope")
     }
   </script>
 
