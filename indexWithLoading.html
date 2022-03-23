@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Depressing Data</title>
+</head>
+<body onload="loadText()">
+  <br><br>
+  <div id="text"></div>
+
+    <form id="search" onSubmit="myFunction()">
+        <lable for="search-column">In Column:</lable>
+        <select name="column" id="search-column">
+            <option value="state">State</option>
+            <option value="fips">State FIPS Code</option>
+            <option value="dist-id">District ID</option>
+            <option value="name">Name</option>
+            <option value="total-pop">Total Population</option>
+            <option value="School-aged-pop">School-aged population</option>
+            <option value="pov-rate">Poverty Rate</option>
+        </select>
+        <lable for="searchfor">Search for </lable>
+        <input id="searchfor" type="text" />
+        <select name="scope" id="search-scope">
+            <option value="exact">Matches Exactly</option>
+            <option value="contains">Contains</option>
+            <option value="not-contains">Does Not Contain</option>
+        </select>
+    <input type="submit" id="submit-search" />
+    </form>
+    <form id="lengthSelect" onSubmit="resize()">
+        <lable for="length">Length:</lable>
+        <select name="length" id="length">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+    </form>
+
+
+  <script>
+    document.getElementById('button').addEventListener('click', loadText);
+
+    function loadText(){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'data.txt', true);
+      xhr.onload = function(){
+        if(this.status == 200){
+		  const myArray = this.responseText.split(/\r\n|\n/);
+		  for(let i = 0 ; i < 10; i++) {
+			var table = document.createElement('table');
+			var row = table.insertRow();
+			const splitArray = myArray[i].split(",")
+			for(let j = 0 ; j < 8; j++) {
+			var cell = row.insertCell();
+			cell.textContent = splitArray[j]; }
+			cell.textContent = (Math.round((splitArray[6] / splitArray[5]) * 10000) / 100) + "%";
+			document.body.appendChild(table);
+			}
+        } else if(this.status = 404){
+          document.getElementById('text').innerHTML = 'Not Found';
+        }
+      }
+      xhr.send();
+    for(let i = 0 ; i < 10; i++) {
+		    var table = document.getElementById("myTable");
+            var row = table.insertRow(0);
+            var cell = row.insertCell(0);
+		    cell.innerHTML = myArray[i];
+    }
+}
+    function myFunction() {
+            var objArray;
+            for (var i =0; i < rows.length; i++){
+                const currentRow = rows[i].split(",");
+                const myObj = {State: currentRow[0], FIPS: currentRow[1], DistrictID: currentRow[2], Name: currentRow[3], EstimatedTotalPopulation: currentRow[4], EstimatedPopulation5to17: currentRow[5], relatedChildren: currentRow[6]
+                }
+                objArray.push(myObj);
+            }
+        }
+        function sort(){
+            objArray.sort(function(a,b){
+                return a.State - b.State;
+            }   );
+        }
+        function sortReverse(){
+            objArray.sort(function(a,b){
+                return b.State - a.State;
+            }   );
+            objArray.reverse();
+        }
+        function search(){
+            let input = document.getElementById('searchbar').value;
+            const scope = document.getElementById('search-scope').value;
+            const column = document.getElementById('search-column').value;
+
+            const searchCallback = getSearchCallback(scope, column, input);
+        }
+        function getSearchCallback(scope, column, input){
+            const searchModes=[(currentValue, input) => currentValue.toLowerCase() == input.toLowerCase(),
+                               (currentValue, input) => currentValue.toLowerCase().includes(input.toLowerCase()),
+                               (currentValue, input) => !currentValue.toLowerCase().includes(input.toLowerCase()), 
+                               (currentValue, input) => currentValue.toLowerCase() < input.toLowerCase(),
+                               (currentValue, input) => currentValue.toLowerCase() > input.toLowerCase()];
+            return searchModes[scope];
+        }
+        function resize(){
+            let length = getDocument.getElementById('length').value;
+            
+        }
+    </script>
+</body>
+</html>
