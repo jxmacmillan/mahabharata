@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Depressing Data</title>
 </head>
-<body onload="loadText(10)">
+<body onload="loadText()">
   <br><br>
   <div id="text"></div>
 
@@ -33,33 +33,37 @@
     </form>
     <form id="lengthSelect" onSubmit="resize()">
         <lable for="length">Length:</lable>
-        <select id ="length" name="length" onmousedown="this.value='';" onchange="loadText(this.value);">
+        <select name="length" id="length">
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
         </select>
     </form>
-
+  <table>
+      <thead>
+          <tr>
+              <th><a href="javascript:sortTable(state)">State</a></th>
+              <th><a href="javascript:sortTable(FIPS)">State FIPS Code</a></th>
+              <th><a href="javascript:sortTable(DisID)">District ID</a></th>
+              <th><a href="javascript:sortTable(Name)">Name</a></th>
+              <th><a href="javascript:sortTable(Popn)">Total Population</a></th>
+              <th><a href="javascript:sortTable(SApopn)">School-aged population (5-17)</a></th>
+              <th><a href="javascript:sortTable(SApov)">School-aged children in poverty</a></th>
+              <th><a href="javascript:sortTable(PovRate)">Poverty Rate</a></th>
+          </tr>
+      </thead>
+  </table>
 
   <script>
     document.getElementById('button').addEventListener('click', loadText);
 
-    function loadText(num){
+
+    function loadText(){
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data.txt', true);
       xhr.onload = function(){
         if(this.status == 200){
-		  const myArray = this.responseText.split(/\r\n|\n/);
-		  for(let i = 0 ; i < num; i++) {
-			var table = document.createElement('table');
-			var row = table.insertRow();
-			const splitArray = myArray[i].split(",")
-			for(let j = 0 ; j < 8; j++) {
-			var cell = row.insertCell();
-			cell.textContent = splitArray[j]; }
-			cell.textContent = (Math.round((splitArray[6] / splitArray[5]) * 10000) / 100) + "%";
-			document.body.appendChild(table);
-			}
+		  const myArray = this.responseText.split(",");
         } else if(this.status = 404){
           document.getElementById('text').innerHTML = 'Not Found';
         }
@@ -81,15 +85,58 @@
                 objArray.push(myObj);
             }
         }
-        function sort(){
-            objArray.sort(function(a,b){
-                return a.State - b.State;
-            }   );
+        function sortTable(sortBy){
+            var table, rows;
+            table = document.getElementById("myTable");
+            columns = table.getElementsByTagName("th");
+            sortedTable = [];
+            switch(sortBy) {
+                case "state":
+                    for (var i = 0; i < objArray.length; i++) {
+                        sortedTable.push(objArray[i].State.sort());
+                    }
+                    break;
+                case "FIPS":
+                    for (var i = 0; i < objArray.length; i++) {
+                        sortedTable.push(objArray[i].FIPS().sort());
+                    }
+                    break;
+                case "DisID":
+                    for (var i = 0; i < objArray.length; i++) {
+                        sortedTable.push(objArray[i].DistrictID().sort());
+                    }
+                    break;
+                case "Name":
+                    for (var i = 0; i < objArray.length; i++) {
+                        sortedTable.push(objArray[i].Name().sort());
+                    }
+                    break;
+                case "Popn":
+                    for (var i = 0; i < objArray.length; i++) {
+                        sortedTable.push(objArray[i].EstimatedTotalPopulation().sort());
+                    }
+                    break;
+                case "SApopn":
+                    for (var i = 0; i < objArray.length; i++) {
+                        sortedTable.push(objArray[i].EstimatedPopulation5to17.sort());
+                    }
+                    break;
+                case "SApov":
+                    for (var i = 0; i < objArray.length; i++) {
+                        sortedTable.push(objArray[i].relatedChildren.sort());
+                    }
+                    break;
+                case "PovRate":
+                    for (var i = 0; i < objArray.length; i++) {
+                        sortedTable.push(objArray[i].relatedChildren.sort());
+                    }
+                    break;
+            }
+            for(var i = 0; i < columns.length; i++){
+                sortedTable.push(table[objArray[i]]);
+            }
         }
         function sortReverse(){
-            objArray.sort(function(a,b){
-                return b.State - a.State;
-            }   );
             objArray.reverse();
         }
         function search(){
