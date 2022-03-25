@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Depressing Data</title>
 </head>
-<body onload="loadText(10)">
+<body onload="loadText()">
   <br><br>
   <div id="text"></div>
 
@@ -33,37 +33,24 @@
     </form>
     <form id="lengthSelect" onSubmit="resize()">
         <lable for="length">Length:</lable>
-        <select id ="length" name="length" onmousedown="this.value='';" onchange="loadText(this.value);">
+        <select name="length" id="length">
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
         </select>
     </form>
-  <table>
-      <thead>
-          <tr>
-              <th><a href="javascript:sortTable()">State</a></th>
-              <th><a href="javascript:sortTable()">State FIPS Code</a></th>
-              <th><a href="javascript:sortTable()">District ID</a></th>
-              <th><a href="javascript:sortTable()">Name</a></th>
-              <th><a href="javascript:sortTable()">Total Population</a></th>
-              <th><a href="javascript:sortTable()">School-aged population (5-17)</a></th>
-              <th><a href="javascript:sortTable()">School-aged children in poverty</a></th>
-              <th><a href="javascript:sortTable()">Poverty Rate</a></th>
-          </tr>
-      </thead>
-  </table>
+
 
   <script>
     document.getElementById('button').addEventListener('click', loadText);
 
-    function loadText(num){
+    function loadText(){
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data.txt', true);
       xhr.onload = function(){
         if(this.status == 200){
 		  const myArray = this.responseText.split(/\r\n|\n/);
-		  for(let i = 0 ; i < num; i++) {
+		  for(let i = 0 ; i < 10; i++) {
 			var table = document.createElement('table');
 			var row = table.insertRow();
 			const splitArray = myArray[i].split(",")
@@ -94,12 +81,15 @@
                 objArray.push(myObj);
             }
         }
-        function sortTable(){
-            var table, rows;
-            table = document.getElementById("myTable");
-            row = listener;
+        function sort(){
+            objArray.sort(function(a,b){
+                return a.State - b.State;
+            }   );
         }
         function sortReverse(){
+            objArray.sort(function(a,b){
+                return b.State - a.State;
+            }   );
             objArray.reverse();
         }
         function search(){
