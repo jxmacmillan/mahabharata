@@ -42,32 +42,21 @@
   <table>
       <thead>
           <tr>
-              <th><a href="javascript:sort()">State</a></th>
-              <th>State FIPS Code</th>
-              <th>District ID</th>
-              <th>Name</th>
-              <th>Total Population</th>
-              <th>School-aged population (5-17)</th>
-              <th>School-aged children in poverty</th>
-              <th>Poverty Rate</th>
+              <th><a href="javascript:sortTable()">State</a></th>
+              <th><a href="javascript:sortTable()">State FIPS Code</a></th>
+              <th><a href="javascript:sortTable()">District ID</a></th>
+              <th><a href="javascript:sortTable()">Name</a></th>
+              <th><a href="javascript:sortTable()">Total Population</a></th>
+              <th><a href="javascript:sortTable()">School-aged population (5-17)</a></th>
+              <th><a href="javascript:sortTable()">School-aged children in poverty</a></th>
+              <th><a href="javascript:sortTable()">Poverty Rate</a></th>
           </tr>
       </thead>
-      <tbody>
-          <tr>
-              <td>AL</td>
-              <td>01</td>
-              <td>00190</td>
-              <td>Alabaster City School District</td>
-              <td>35,268</td>
-              <td>6,797</td>
-              <td>669</td>
-              <td>9.84%</td>
-          </tr>
-      </tbody>
   </table>
 
   <script>
     document.getElementById('button').addEventListener('click', loadText);
+
 
     function loadText(){
       var xhr = new XMLHttpRequest();
@@ -86,6 +75,7 @@
             var cell = row.insertCell(0);
 		    cell.innerHTML = myArray[i];
     }
+}
     function myFunction() {
             var objArray;
             for (var i =0; i < rows.length; i++){
@@ -95,29 +85,28 @@
                 objArray.push(myObj);
             }
         }
-        function sort(){
-            objArray.sort(function(a,b){
-                return a.State - b.State;
-            }   );
+        function sortTable(){
+            var table, rows;
+            table = document.getElementById("myTable");
+            row = listener;
         }
         function sortReverse(){
-            objArray.sort(function(a,b){
-                return b.State - a.State;
-            }   );
             objArray.reverse();
         }
         function search(){
             let input = document.getElementById('searchbar').value;
-            input=input.toLowerCase();
-            let x = document.getElementsByClassName('objArray');
-            for (i = 0; i < x.length; i++) {
-                if (!x[i].innerHTML.toLowerCase().includes(input)) {
-                x[i].style.display="none";
-                }
-                else {
-                    x[i].style.display="list-item";
-                }
-            }
+            const scope = document.getElementById('search-scope').value;
+            const column = document.getElementById('search-column').value;
+
+            const searchCallback = getSearchCallback(scope, column, input);
+        }
+        function getSearchCallback(scope, column, input){
+            const searchModes=[(currentValue, input) => currentValue.toLowerCase() == input.toLowerCase(),
+                               (currentValue, input) => currentValue.toLowerCase().includes(input.toLowerCase()),
+                               (currentValue, input) => !currentValue.toLowerCase().includes(input.toLowerCase()), 
+                               (currentValue, input) => currentValue.toLowerCase() < input.toLowerCase(),
+                               (currentValue, input) => currentValue.toLowerCase() > input.toLowerCase()];
+            return searchModes[scope];
         }
         function resize(){
             let length = getDocument.getElementById('length').value;
